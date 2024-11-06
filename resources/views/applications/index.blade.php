@@ -65,11 +65,45 @@
         a.tambah-lamaran:hover {
             background-color: #007b9e;
         }
+
+        /* Styling untuk status */
+        .status {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .status.diterima {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .status.ditolak {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .status.menunggu {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .status.proses {
+            background-color: #2196F3;
+            color: white;
+        }
     </style>
 </head>
 <body>
 
     <h1>Daftar Lamaran Pekerjaan</h1>
+
+    <!-- Menampilkan pesan sukses jika ada -->
+    @if (session('success'))
+        <div style="color: green; font-weight: bold;">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <!-- Tabel yang benar -->
     <table>
@@ -90,7 +124,12 @@
                 <td>{{ $application->company_name }}</td>
                 <td>{{ $application->job_title }}</td>
                 <td>{{ $application->application_date }}</td>
-                <td>{{ $application->status }}</td>
+                <td>
+                    <!-- Menampilkan status dengan warna sesuai kondisi -->
+                    <span class="status {{ strtolower($application->status) }}">
+                        {{ $application->status }}
+                    </span>
+                </td>
                 <td>
                     <a href="{{ route('applications.edit', $application->id) }}">Edit</a>
                     <form action="{{ route('applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin?');" style="display:inline;">

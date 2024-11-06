@@ -2,9 +2,26 @@
 
 @section('content')
     <h1>Edit Lamaran Pekerjaan</h1>
+
+    <!-- Menampilkan pesan kesalahan jika ada -->
+    @if ($errors->any())
+        <div style="color: red;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <!-- Form Edit Lamaran Pekerjaan -->
     <form action="{{ route('applications.update', $application->id) }}" method="POST">
         @csrf
-        @method('PUT')
+        @method('PUT') <!-- Pastikan kita menggunakan method PUT untuk update -->
+
+        <label for="applicant_name">Nama Pelamar:</label>
+        <input type="text" name="applicant_name" value="{{ old('applicant_name', $application->applicant_name) }}" required>
+        <br>
 
         <label for="company_name">Perusahaan:</label>
         <input type="text" name="company_name" value="{{ old('company_name', $application->company_name) }}" required>

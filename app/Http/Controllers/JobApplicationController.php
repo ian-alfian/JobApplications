@@ -29,8 +29,9 @@ class JobApplicationController extends Controller
         ]);
 
         // Menyimpan data lamaran baru
-        JobApplication::create($request->all());
-        return redirect()->route('applications.index');
+        JobApplication::create($request->only('applicant_name', 'company_name', 'job_title', 'application_date'));
+
+        return redirect()->route('applications.index')->with('success', 'Lamaran berhasil disimpan');
     }
 
     public function edit($id)
@@ -53,14 +54,16 @@ class JobApplicationController extends Controller
         $application = JobApplication::findOrFail($id);
 
         // Memperbarui aplikasi dengan data baru
-        $application->update($request->all());
-        return redirect()->route('applications.index');
+        $application->update($request->only('applicant_name', 'company_name', 'job_title', 'application_date'));
+
+        return redirect()->route('applications.index')->with('success', 'Lamaran berhasil diperbarui');
     }
 
     public function destroy($id)
     {
         $application = JobApplication::findOrFail($id);
         $application->delete();
-        return redirect()->route('applications.index');
+
+        return redirect()->route('applications.index')->with('success', 'Lamaran berhasil dihapus');
     }
 }
