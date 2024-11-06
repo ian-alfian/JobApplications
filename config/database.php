@@ -5,9 +5,9 @@ use Illuminate\Support\Str;
 return [
 
     /*
-    |--------------------------------------------------------------------------
+    |----------------------------------------------------------------------
     | Default Database Connection Name
-    |--------------------------------------------------------------------------
+    |----------------------------------------------------------------------
     |
     | Here you may specify which of the database connections below you wish
     | to use as your default connection for database operations. This is
@@ -16,12 +16,12 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'mysql'), // Gunakan mysql sebagai default
 
     /*
-    |--------------------------------------------------------------------------
+    |----------------------------------------------------------------------
     | Database Connections
-    |--------------------------------------------------------------------------
+    |----------------------------------------------------------------------
     |
     | Below are all of the database connections defined for your application.
     | An example configuration is provided for each database system which
@@ -31,6 +31,7 @@ return [
 
     'connections' => [
 
+        // Koneksi SQLite
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),
@@ -42,6 +43,7 @@ return [
             'synchronous' => null,
         ],
 
+        // Koneksi MySQL (Default)
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
@@ -62,6 +64,23 @@ return [
             ]) : [],
         ],
 
+        // Koneksi untuk Database kedua (job_application_db)
+        'job_application_db' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_2', '127.0.0.1'),
+            'port' => env('DB_PORT_2', '3306'),
+            'database' => env('DB_DATABASE_2', 'job_application_db'),
+            'username' => env('DB_USERNAME_2', 'root'),
+            'password' => env('DB_PASSWORD_2', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
+        // Koneksi MariaDB
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),
@@ -82,6 +101,7 @@ return [
             ]) : [],
         ],
 
+        // Koneksi PostgreSQL
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),
@@ -97,6 +117,7 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        // Koneksi SQL Server
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),
@@ -115,9 +136,9 @@ return [
     ],
 
     /*
-    |--------------------------------------------------------------------------
+    |----------------------------------------------------------------------
     | Migration Repository Table
-    |--------------------------------------------------------------------------
+    |----------------------------------------------------------------------
     |
     | This table keeps track of all the migrations that have already run for
     | your application. Using this information, we can determine which of
@@ -131,9 +152,9 @@ return [
     ],
 
     /*
-    |--------------------------------------------------------------------------
+    |----------------------------------------------------------------------
     | Redis Databases
-    |--------------------------------------------------------------------------
+    |----------------------------------------------------------------------
     |
     | Redis is an open source, fast, and advanced key-value store that also
     | provides a richer body of commands than a typical key-value system

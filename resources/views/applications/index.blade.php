@@ -1,13 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Lamaran Pekerjaan</title>
+    <style>
+        /* Style untuk tabel */
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Menggabungkan border antara sel tabel */
+            margin-top: 20px;
+        }
+
+        /* Style untuk header tabel */
+        th {
+            padding: 10px;
+            background-color: #f2f2f2;
+            border: 1px solid #ddd; /* Border untuk header */
+            text-align: left;
+        }
+
+        /* Style untuk sel tabel */
+        td {
+            padding: 10px;
+            border: 1px solid #ddd; /* Border untuk sel */
+            text-align: left;
+        }
+
+        /* Style untuk baris tabel ganjil (untuk pembeda visual) */
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Style untuk baris tabel saat hover (untuk interaktivitas) */
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Tombol Edit dan Hapus */
+        a, button {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        a:hover, button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style untuk link "Tambah Lamaran Baru" */
+        a.tambah-lamaran {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        a.tambah-lamaran:hover {
+            background-color: #007b9e;
+        }
+    </style>
 </head>
 <body>
+
     <h1>Daftar Lamaran Pekerjaan</h1>
+
+    <!-- Tabel yang benar -->
     <table>
         <thead>
             <tr>
+                <th>Nama Pelamar</th>
                 <th>Perusahaan</th>
                 <th>Posisi</th>
                 <th>Tanggal Pengajuan</th>
@@ -16,55 +84,27 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($applications as $application)
-                <tr>
-                    <td>{{ $application->company_name }}</td>
-                    <td>{{ $application->job_title }}</td>
-                    <td>{{ $application->application_date }}</td>
-                    <td>{{ $application->status }}</td> <!-- Tambahkan jika ada status -->
-                    <td>
-                        <a href="{{ route('applications.edit', $application->id) }}">Edit</a>
-                        <form action="{{ route('applications.destroy', $application->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
+            @foreach ($applications as $application)
+            <tr>
+                <td>{{ $application->applicant_name }}</td>
+                <td>{{ $application->company_name }}</td>
+                <td>{{ $application->job_title }}</td>
+                <td>{{ $application->application_date }}</td>
+                <td>{{ $application->status }}</td>
+                <td>
+                    <a href="{{ route('applications.edit', $application->id) }}">Edit</a>
+                    <form action="{{ route('applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin?');" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Hapus</button>
+                    </form>
+                </td>
+            </tr>
             @endforeach
         </tbody>
     </table>
-    <a href="{{ route('applications.create') }}">Tambah Lamaran Baru</a>
+
+    <a href="{{ route('applications.create') }}" class="tambah-lamaran">Tambah Lamaran Baru</a>
+
 </body>
 </html>
-<table>
-    <thead>
-        <tr>
-            <th>Nama Pelamar</th>
-            <th>Perusahaan</th>
-            <th>Posisi</th>
-            <th>Tanggal Pengajuan</th>
-            <th>Status</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($applications as $application)
-        <tr>
-            <td>{{ $application->applicant_name }}</td>
-            <td>{{ $application->company_name }}</td>
-            <td>{{ $application->job_title }}</td>
-            <td>{{ $application->application_date }}</td>
-            <td>{{ $application->status }}</td>
-            <td>
-                <a href="{{ route('applications.edit', $application->id) }}">Edit</a>
-                <form action="{{ route('applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Hapus</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
